@@ -28,6 +28,7 @@ RUN yum clean all -y
 RUN /usr/bin/wget --progress=dot:giga https://sourceforge.net/projects/pentaho/files/Business%20Intelligence%20Server/${BISERVER_VERSION}/biserver-ce-${BISERVER_TAG}.zip/download -O /tmp/biserver-ce-${BISERVER_TAG}.zip; \
     /usr/bin/unzip -q /tmp/biserver-ce-${BISERVER_TAG}.zip -d  $HOME; \
     rm -f /tmp/biserver-ce-${BISERVER_TAG}.zip $HOME/biserver-ce/promptuser.sh; \
+    sed -i -e 's/\(exec ".*"\) start/\1 run/' $HOME/biserver-ce/tomcat/bin/startup.sh; \
     chmod +x $HOME/biserver-ce/start-pentaho.sh
 
 
