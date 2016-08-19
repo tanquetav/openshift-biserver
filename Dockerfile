@@ -31,10 +31,23 @@ RUN /usr/bin/wget --progress=dot:giga https://sourceforge.net/projects/pentaho/f
     sed -i -e 's/\(exec ".*"\) start/\1 run/' $HOME/biserver-ce/tomcat/bin/startup.sh; \
     chmod +x $HOME/biserver-ce/start-pentaho.sh
 
+RUN /usr/bin/wget --progress=dot:giga http://ufpr.dl.sourceforge.net/project/btable/Version2.1/BTable-pentaho5-STABLE-2.1.zip -O /tmp/plugin.zip ; \
+    /usr/bin/unzip -q /tmp/plugin.zip -d  $HOME/biserver-ce/pentaho-solutions/system ; \
+   rm /tmp/plugin.zip
+
+RUN /usr/bin/wget --progress=dot:giga http://nexus.pentaho.org/content/groups/omni/pentaho/sparkl/6.1.0.1-196/sparkl-6.1.0.1-196.zip -O /tmp/plugin.zip ; \
+    /usr/bin/unzip -q /tmp/plugin.zip -d  $HOME/biserver-ce/pentaho-solutions/system ; \
+   rm /tmp/plugin.zip
+
+RUN /usr/bin/wget --progress=dot:giga http://www.meteorite.bi/downloads/saiku-plugin-p6-3.8.8.zip -O /tmp/plugin.zip ; \
+    /usr/bin/unzip -q /tmp/plugin.zip -d  $HOME/biserver-ce/pentaho-solutions/system ; \
+   rm /tmp/plugin.zip
+
 
 COPY scripts/start.sh ${HOME}/start.sh
 RUN chmod +x ${HOME}/start.sh
 
+COPY configs/license.lic $HOME/biserver-ce/pentaho-solutions/system/saiku/
 
 COPY configs/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
